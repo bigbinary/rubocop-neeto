@@ -1,4 +1,3 @@
-
 Neeto/UnsafeTableDeletion:
   Description: >-
     `drop_table` is considered as a dangerous operation. If not used correctly,
@@ -6,6 +5,19 @@ Neeto/UnsafeTableDeletion:
     to `table_name_deprecated_on_yyyy_mm_dd` instead. The renamed table can be
     safely dropped in a later migration. The cop permits dropping tables
     that are named in the above format.
+  Enabled: true
+  Severity: refactor
+  VersionAdded: '0.1'
+  Include:
+    - db/**/*.rb
+
+Neeto/UnsafeColumnDeletion:
+  Description: >-
+    `remove_column` is considered as a dangerous operation. If not used
+    correctly, it could cause irreversible data loss. It is advised to rename
+    the column to `column_name_deprecated_on_yyyy_mm_dd` instead. The renamed
+    column can be safely removed in a later migration. The cop permits
+    removing columns that are named in the above format.
   Enabled: true
   Severity: refactor
   VersionAdded: '0.1'
