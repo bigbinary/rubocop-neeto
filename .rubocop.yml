@@ -1,6 +1,4 @@
 # cspell:Disable
-require:
-  - rubocop-rails
 
 AllCops:
   TargetRubyVersion: 3.2.4
@@ -619,18 +617,3 @@ Lint/AssignmentInCondition:
 Bundler/OrderedGems:
   Enabled: true
   TreatCommentsAsGroupSeparators: true
-
-# ====================================================================================================
-# All Rails cop rules
-# ====================================================================================================
-# Enabled Rails cops for the command for VSCode linting and while running rubocop -a
-Rails:
-  Enabled: false
-
-# Correct usage of Date methods in Rails. Use Time.zone.today over Date.today
-Rails/Date:
-  Enabled: true
-
-# Correct usage of TimeZone methods in Rails
-Rails/TimeZone:
-  Enabled: true
