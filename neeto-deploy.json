@@ -1,0 +1,12 @@
+{
+  "name": "rubocop-neeto",
+  "scripts": {},
+  "stack": "heroku-20",
+  "formation": {},
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}
