@@ -16,3 +16,5 @@ gem "rubocop", "~> 1.21"
 gem "yard", "~> 0.9.36"
 
 gem "webrick", "~> 1.8"
+
+gem "rack", "~> 3.1"
