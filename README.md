@@ -1,7 +1,8 @@
 # RuboCop::Neeto
 
-Custom RuboCop cops for Neeto.
-- UnsafeTableDeletion # TODO: Replace this with the deployed link.
+## Cops
+- [UnsafeTableDeletion](https://rubocop-neeto.neetodeployapp.com/docs/RuboCop/Cop/Neeto/UnsafeTableDeletion)
+- [UnsafeColumnDeletion](https://rubocop-neeto.neetodeployapp.com/docs/RuboCop/Cop/Neeto/UnsafeColumnDeletion)
 
 ## Installation
 
@@ -15,7 +16,22 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-TODO: Write usage instructions here. How to add it to your current .rubocop config. All cops are enabled by default. How to disable them?
+Add the following line to your `.rubocop.yml` file.
+
+```yaml
+require: rubocop-neeto
+```
+
+Alternatively, use the following array notation when specifying multiple extensions.
+
+```yaml
+require:
+  - rubocop-other-extension
+  - rubocop-neeto
+```
+
+Now, run the `rubocop` command ti load `rubocop-neeto` cops together with the
+standard cops.
 
 ## Development
 

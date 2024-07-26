@@ -12,3 +12,5 @@ gem "minitest", "~> 5.16"
 gem "rspec"
 
 gem "rubocop", "~> 1.21"
+
+gem "yard", "~> 0.9.36"
