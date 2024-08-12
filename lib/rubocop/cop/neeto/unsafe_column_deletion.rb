@@ -34,7 +34,7 @@ module RuboCop
 
         MSG_REMOVE_COLUMN = "'remove_column' is a dangerous operation. If " \
           "not used correctly, it could cause irreversible data loss. You must perform " \
-          "'rename_column :%{table_name}, %{column_name}, :%{column_name}_deprecated_on_#{CURRENT_DATE}' " \
+          "'rename_column :%{table_name}, :%{column_name}, :%{column_name}_deprecated_on_#{CURRENT_DATE}' " \
           "instead. The renamed column can be safely dropped in a future migration."
 
         MSG_CHANGE_TABLE = "'t.remove' is a dangerous operation. If not used correctly, " \
