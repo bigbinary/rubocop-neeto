@@ -2,10 +2,8 @@
 
 ## Cops
 
-| Cop                                                                                                          | Documentation                                                                                         | Source code                                                                                                         |
-|--------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| [UnsafeTableDeletion](https://rubocop-neeto.neetodeployapp.com/docs/RuboCop/Cop/Neeto/UnsafeTableDeletion)   | [documentation](https://rubocop-neeto.neetodeployapp.com/docs/RuboCop/Cop/Neeto/UnsafeTableDeletion)  | [source code](https://github.com/bigbinary/rubocop-neeto/blob/main/lib/rubocop/cop/neeto/unsafe_table_deletion.rb)  |
-| [UnsafeColumnDeletion](https://rubocop-neeto.neetodeployapp.com/docs/RuboCop/Cop/Neeto/UnsafeColumnDeletion) | [documentation](https://rubocop-neeto.neetodeployapp.com/docs/RuboCop/Cop/Neeto/UnsafeColumnDeletion) | [source code](https://github.com/bigbinary/rubocop-neeto/blob/main/lib/rubocop/cop/neeto/unsafe_column_deletion.rb) |
+1. [Neeto/UnsafeTableDeletion](https://rubocop-neeto.neetodeployapp.com/docs/RuboCop/Cop/Neeto/UnsafeTableDeletion)
+2. [Neeto/UnsafeColumnDeletion](https://rubocop-neeto.neetodeployapp.com/docs/RuboCop/Cop/Neeto/UnsafeColumnDeletion)
 
 ## Installation
 
