@@ -1,2 +1,2 @@
-web: yard server
+web: yard server --port 3000
 release: yard doc
