@@ -67,10 +67,26 @@ RSpec.describe RuboCop::Cop::Neeto::UnsafeTableDeletion, :config do
     expect_no_offenses(snippet)
   end
 
+  it "registers an offense with a sliced table name when the table name is too long" do
+    table_name = "question_multiple_choice_option_entities"
+
+    snippet = <<~RUBY
+    drop_table :#{table_name}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{offense(table_name)}
+    RUBY
+
+    expect_offense(snippet)
+    truncated_table_name = table_name
+      .slice(0, RuboCop::Cop::Neeto::UnsafeTableDeletion::MAX_TABLE_NAME_LENGTH)
+
+    expect(offense(table_name)).to include(truncated_table_name)
+  end
+
   private
 
     def offense(table_name)
-      message = format(RuboCop::Cop::Neeto::UnsafeTableDeletion::MSG, table_name:)
+      truncated_table_name = table_name.slice(0, RuboCop::Cop::Neeto::UnsafeTableDeletion::MAX_TABLE_NAME_LENGTH)
+      message = format(RuboCop::Cop::Neeto::UnsafeTableDeletion::MSG, table_name:, truncated_table_name:)
       "Neeto/UnsafeTableDeletion: #{message}"
     end
 end
