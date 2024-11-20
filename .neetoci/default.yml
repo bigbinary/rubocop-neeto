@@ -4,7 +4,7 @@ plan: standard-2
 
 commands:
   - checkout
-  - neetoci-version ruby 3.2.4
+  - neetoci-version ruby 3.3.5
   - bundle config path 'vendor/bundle'
   - cache restore
   - bundle install --jobs 1

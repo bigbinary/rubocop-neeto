@@ -31,12 +31,14 @@ module RuboCop
       #   end
       #
       class UnsafeTableDeletion < Base
+        # Length of "_deprecated_on_xxxx_xx_xx" = 25, Max permitted length of table: 63
+        MAX_TABLE_NAME_LENGTH = 38
         SAFE_TABLE_NAME_REGEX = /\w+_deprecated_on_\d{4}_\d{2}_\d{2}/
         CURRENT_DATE = DateTime.now.strftime("%Y_%m_%d")
 
         MSG = "'drop_table' is a dangerous operation. If not used correctly, " \
           "it could cause irreversible data loss. You must perform " \
-          "'rename_table :%{table_name}, :%{table_name}_deprecated_on_#{CURRENT_DATE}' " \
+          "'rename_table :%{table_name}, :%{truncated_table_name}_deprecated_on_#{CURRENT_DATE}' " \
           "instead. The renamed table can be safely dropped in a future migration."
 
         RESTRICT_ON_SEND = %i[drop_table].freeze
@@ -45,11 +47,20 @@ module RuboCop
           (send nil? :drop_table ({sym str} $_) ...)
         PATTERN
 
+        def_node_matcher :down_method?, <<~PATTERN
+          (def :down ...)
+        PATTERN
+
         def on_send(node)
           return unless unsafe_drop_table?(node)
 
+          node.each_ancestor do |parent|
+            return if down_method?(parent)
+          end
+
           unsafe_drop_table?(node) do |table_name|
-            message = format(MSG, table_name:)
+            truncated_table_name = table_name.slice(0, MAX_TABLE_NAME_LENGTH)
+            message = format(MSG, table_name:, truncated_table_name:)
             add_offense(node, message:) unless SAFE_TABLE_NAME_REGEX.match?(table_name)
           end
         end

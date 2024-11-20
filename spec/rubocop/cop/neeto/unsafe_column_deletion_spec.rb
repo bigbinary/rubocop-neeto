@@ -81,6 +81,20 @@ RSpec.describe RuboCop::Cop::Neeto::UnsafeColumnDeletion, :config do
     expect_no_offenses(snippet)
   end
 
+  it "does not register an offense when the column is dropped in the down method" do
+    snippet = <<~RUBY
+      def down
+        remove_column :users, :email
+
+        change_table :users do |t|
+          t.remove :email
+        end
+      end
+    RUBY
+
+    expect_no_offenses(snippet)
+  end
+
   private
 
     def offense(table_name, column_name, change_table = false)
