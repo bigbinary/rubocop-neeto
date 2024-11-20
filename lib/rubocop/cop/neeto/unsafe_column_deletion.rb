@@ -60,8 +60,11 @@ module RuboCop
         PATTERN
 
         def on_send(node)
-          return if down_method?(node.parent&.parent)
           return unless unsafe_remove_column?(node)
+
+          node.each_ancestor do |parent|
+            return if down_method?(parent)
+          end
 
           unsafe_remove_column?(node) do |table_name, column_name|
             message = format(MSG_REMOVE_COLUMN, table_name:, column_name:)
@@ -70,8 +73,11 @@ module RuboCop
         end
 
         def on_block(node)
-          return if down_method?(node.parent&.parent)
           return unless unsafe_remove_column_change_table?(node)
+
+          node.each_ancestor do |parent|
+            return if down_method?(parent)
+          end
 
           node.each_descendant(:send) do |send_node|
             next unless send_node.method_name == :remove

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "byebug"
+
 module RuboCop
   module Cop
     module Neeto
@@ -52,8 +54,11 @@ module RuboCop
         PATTERN
 
         def on_send(node)
-          return if down_method?(node.parent)
           return unless unsafe_drop_table?(node)
+
+          node.each_ancestor do |parent|
+            return if down_method?(parent)
+          end
 
           unsafe_drop_table?(node) do |table_name|
             truncated_table_name = table_name.slice(0, MAX_TABLE_NAME_LENGTH)
