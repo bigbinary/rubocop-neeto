@@ -82,6 +82,16 @@ RSpec.describe RuboCop::Cop::Neeto::UnsafeTableDeletion, :config do
     expect(offense(table_name)).to include(truncated_table_name)
   end
 
+  it "does not register an offense when the table is dropped in the down method" do
+    snippet = <<~RUBY
+      def down
+        drop_table :users
+      end
+    RUBY
+
+    expect_no_offenses(snippet)
+  end
+
   private
 
     def offense(table_name)
