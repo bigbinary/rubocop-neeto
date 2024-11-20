@@ -1,0 +1,28 @@
+name: release
+on:
+  pull_request:
+    branches:
+    - main
+    types:
+    - closed
+jobs:
+  release-please:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    if: >-
+      ${{ github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'skip-version-bump') }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.5
+      - run: bundle install
+      # Publish
+      - name: publish gem
+        run: |
+          gem install gemfury -v 0.12.0
+          touch $HOME/.netrc
+          chmod 0600 $HOME/.netrc
+          printf "machine api.fury.io\n  login udai.gupta@bigbinary.com\n  password ${{ secrets.GEMFURY_API_KEY }}\nmachine git.fury.io\n  login udai.gupta@bigbinary.com\n  password ${{ secrets.GEMFURY_API_KEY }}\n" > $HOME/.netrc
+          gem build
+          fury push *.gem --as neeto-live

@@ -1,0 +1,50 @@
+name: Bump version
+on:
+  pull_request:
+    branches:
+    - main
+    types:
+    - closed
+jobs:
+  release:
+    name: Bump version
+    permissions: write-all
+    runs-on: ubuntu-latest
+    if: >-
+      ${{ github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'skip-version-bump') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1.195.0
+        with:
+          ruby-version: "3.3.5"
+          bundler-cache: true
+
+      - name: Bump version and create PR
+        uses: bigbinary/bump-product-version@v1.1.5
+        with:
+          labels: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump_label: patch
+
+      - name: Find bump version PR
+        uses: juliangruber/find-pull-request-action@v1
+        id: find-pull-request
+        with:
+          branch: bump-gem-version
+          state: all
+
+      - name: Add mergepr label
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: ${{ steps.find-pull-request.outputs.number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["mergepr"]
+            })
