@@ -47,7 +47,12 @@ module RuboCop
           (send nil? :drop_table ({sym str} $_) ...)
         PATTERN
 
+        def_node_matcher :down_method?, <<~PATTERN
+          (def :down ...)
+        PATTERN
+
         def on_send(node)
+          return if down_method?(node.parent)
           return unless unsafe_drop_table?(node)
 
           unsafe_drop_table?(node) do |table_name|
