@@ -55,7 +55,12 @@ module RuboCop
           (block (send nil? :change_table _ ...) ...)
         PATTERN
 
+        def_node_matcher :down_method?, <<~PATTERN
+          (def :down ...)
+        PATTERN
+
         def on_send(node)
+          return if down_method?(node.parent.parent)
           return unless unsafe_remove_column?(node)
 
           unsafe_remove_column?(node) do |table_name, column_name|
@@ -65,6 +70,7 @@ module RuboCop
         end
 
         def on_block(node)
+          return if down_method?(node.parent.parent)
           return unless unsafe_remove_column_change_table?(node)
 
           node.each_descendant(:send) do |send_node|
