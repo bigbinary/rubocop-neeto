@@ -95,6 +95,18 @@ RSpec.describe RuboCop::Cop::Neeto::UnsafeColumnDeletion, :config do
     expect_no_offenses(snippet)
   end
 
+  it "registers an offense when multiple columns are dropped in a single remove operation" do
+    snippet = <<~RUBY
+      change_table :users do |t|
+        t.remove :email, :first_name
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ #{offense("users", "email", true)}
+        t.string :last_name, type: :string
+      end
+    RUBY
+
+    expect_offense(snippet)
+  end
+
   private
 
     def offense(table_name, column_name, change_table = false)
