@@ -1,2 +1,2 @@
-web: bundle exec yard server -s webrick
-release: bundle exec yard doc
+web: bundle exec yard server -r -a webrick
+release: ruby -v
