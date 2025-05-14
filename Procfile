@@ -1,2 +1,2 @@
-web: yard server --port 3000
+web: yard server -s webrick
 release: yard doc
