@@ -1,2 +1,2 @@
-web: yard server --port 3000
-release: yard doc
+web: bundle exec yard server -p 3000
+release: ruby -v
