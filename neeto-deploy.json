@@ -6,7 +6,7 @@
   "addons": [],
   "buildpacks": [
     {
-      "url": "neeto-deploy/ruby"
+      "url": "heroku/ruby"
     }
   ]
 }

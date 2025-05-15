@@ -2,8 +2,6 @@
 
 source "https://rubygems.org"
 
-ruby file: ".ruby-version"
-
 # Specify your gem's dependencies in rubocop-neeto.gemspec
 gemspec
 
@@ -19,6 +17,6 @@ gem "yard", "~> 0.9.36"
 
 gem "webrick", "~> 1.8"
 
-gem "rack", "3.0.16"
+gem "rack", "3.0.11"
 
 gem "thor"
