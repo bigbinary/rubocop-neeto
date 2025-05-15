@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubocop-neeto (0.1.4)
+    rubocop-neeto (0.1.5)
       rubocop
 
 GEM
